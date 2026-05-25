@@ -1,12 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes.auth import router as auth_router
+
 from app.routes.chat import router as chat_router
+from app.routes.auth import router as auth_router
 
 app = FastAPI()
-app.include_router(auth_router)
 
-# CORS FIX
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,9 +14,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routes
 app.include_router(chat_router)
+app.include_router(auth_router)
 
 @app.get("/")
 def home():
-    return {"message": "Finance Chatbot Running"}
+    return {
+        "message": "Finance AI Backend Running"
+    }
